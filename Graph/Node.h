@@ -1,8 +1,14 @@
 #pragma once
+#include <string>
+
+using namespace std;
 class Node
 {
 public:
-	Node();
+	Node(string name);
 	~Node();
+	string getname();
+protected:
+	string name;
 };
 

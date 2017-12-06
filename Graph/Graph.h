@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 #include <stack>
+#include <set>
 
 using namespace std;
 
@@ -16,8 +17,10 @@ public:
 	Graph* reverse();
 	queue<Node*> topological_ordering();
 	queue<vector<Node*>> strong_connect();
+	void addpair(NodePair* in);
 protected:
-	vector<NodePair> edges;
+	vector<NodePair*> edges;
+	set<Node*> allnodes;
 
 };
 
