@@ -10,6 +10,6 @@ public:
 
 protected:
 	Node * a;
-	Node* b
+	Node* b;
 };
 

@@ -16,7 +16,7 @@ void Graph::addnode(Node* in)
 	bool found = false;
 	for (int i = 0; i < nodes.size() && !found; i++)
 	{
-		if (in == nodes[i])
+		if (*in == *(nodes[i]))
 			found = true;
 	}
 	if (!found)
@@ -28,10 +28,15 @@ void Graph::addpair(NodePair* in)
 	int found = -1;
 	for (int i = 0; i < nodes.size() && found == -1; i++)
 	{
-		if (nodes[i] == in->geta())
+		if (nodes[i]->getname() == in->geta()->getname())
 		{
 			found = i;
-			nodes[i]->addchild(new Node(in->getb()->getname()));
+			for (int j = 0; j < nodes.size(); j++)
+			{
+				if (*(nodes[j]) == *(in->getb()))
+					nodes[i]->addchild(nodes[j]);
+			}
+			//nodes[i]->addchild(new Node(in->getb()->getname()));
 		}
 	}
 	if (found == -1)
@@ -44,6 +49,10 @@ void Graph::addpair(NodePair* in)
 Graph* Graph::reverse()
 {
 	Graph* result = new Graph();
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		result->addnode(new Node(nodes[i]->getname()));
+	}
 	for (int i = 0; i < nodes.size(); i++)
 	{
 		for (int j = 0; j < nodes.size(); j++)
@@ -59,14 +68,14 @@ Graph* Graph::reverse()
 
 queue<Node*> Graph::topological_ordering()
 {
-	vector<Node*> visited;
+	vector<Node*>* visited = new vector<Node*>();
 	queue<Node*> result;
 	for (int i = 0; i < nodes.size(); i++)
 	{
 		bool found = false;
-		for (int j = 0; j < visited.size() && !found; j++)
+		for (int j = 0; j < visited->size() && !found; j++)
 		{
-			if (nodes[i] == visited[j])
+			if (*(nodes[i]) == *visited->at(j))
 				found = true;
 		}
 		if (!found)
@@ -74,7 +83,7 @@ queue<Node*> Graph::topological_ordering()
 			queue<Node*> returned = nodes[i]->top_order(visited);
 			while (returned.size() != 0)
 			{
-				visited.push_back(returned.front());
+				visited->push_back(returned.front());
 				result.push(returned.front());
 				returned.pop();
 			}
@@ -89,11 +98,23 @@ queue<queue<Node*>> Graph::strong_connect()
 	queue<Node*> top_order_inverted = inverted->topological_ordering();
 	queue<queue<Node*>> result;
 
-	vector<Node*> visited;
+	vector<Node*>* visited = new vector<Node*>();
 	while (top_order_inverted.size() != 0)
 	{
-		result.push(top_order_inverted.front()->top_order(visited));
-		top_order_inverted.pop();
+		bool found = false;
+		for (int i = 0; i < visited->size() && !found; i++)
+		{
+			if (*(visited->at(i)) == *(top_order_inverted.front()))
+			{
+				found = true;
+				top_order_inverted.pop();
+			}
+		}
+		if (!found)
+		{
+			result.push(top_order_inverted.front()->top_order(visited));
+			top_order_inverted.pop();
+		}
 	}
 	return result;
 }

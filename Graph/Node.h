@@ -13,7 +13,7 @@ public:
 	void addchild(Node* node);
 	vector<Node*> getchildren();
 	bool isparent(Node* parent);
-	queue<Node*> top_order(vector<Node*> visited);
+	queue<Node*> top_order(vector<Node*>* visited);
 	friend bool operator==(const Node lh, const Node rh)
 	{
 		if (lh.name == rh.name)
@@ -23,6 +23,17 @@ public:
 		else
 		{
 			return false;
+		}
+	}
+	friend bool operator!=(const Node lh, const Node rh)
+	{
+		if (lh.name == rh.name)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
 		}
 	}
 protected:

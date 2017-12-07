@@ -31,27 +31,27 @@ bool Node::isparent(Node* parent)
 {
 	for (int i = 0; i < children.size(); i++)
 	{
-		if (parent == children[i])
+		if (*parent == *(children[i]))
 			return true;
 	}
 	return false;
 }
 
-queue<Node*> Node::top_order(vector<Node*> visited)
+queue<Node*> Node::top_order(vector<Node*>* visited)
 {
 	queue<Node*> result;
-	visited.push_back(this);
+	visited->push_back(this);
 	for (int i = 0; i < children.size(); i++)
 	{
 		bool found = false;
-		for (int j = 0; j < visited.size() && !found; j++)
+		for (int j = 0; j < visited->size() && !found; j++)
 		{
-			if (visited[j] == children[i])
+			if (*visited->at(j) == *(children[i]))
 				found = true;
 		}
 		if (!found)
 		{
-			queue<Node*> returned = children[i]->top_order();
+			queue<Node*> returned = children[i]->top_order(visited);
 			while (returned.size() != 0)
 			{
 				result.push(returned.front());

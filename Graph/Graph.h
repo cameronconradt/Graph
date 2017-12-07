@@ -25,7 +25,7 @@ public:
 			return false;
 		for (int i = 0; i < lh.nodes.size(); i++)
 		{
-			if (lh.nodes[i] != rh.nodes[i])
+			if (*(lh.nodes[i]) != *(rh.nodes[i]))
 				return false;
 		}
 		return true;
