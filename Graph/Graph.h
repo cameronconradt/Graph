@@ -19,8 +19,7 @@ public:
 	queue<vector<Node*>> strong_connect();
 	void addpair(NodePair* in);
 protected:
-	vector<NodePair*> edges;
-	set<Node*> allnodes;
+	vector<Node*> nodes;
 
 };
 

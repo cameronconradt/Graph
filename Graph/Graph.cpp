@@ -13,15 +13,34 @@ Graph::~Graph()
 
 void Graph::addpair(NodePair* in)
 {
-	edges.push_back(in);
+	int found = -1;
+	for (int i = 0; i < nodes.size() && found == -1; i++)
+	{
+		if (nodes[i] == in->geta())
+		{
+			found = i;
+			nodes[i]->addchild(new Node(in->getb()->getname()));
+		}
+	}
+	if (found == -1)
+	{
+		nodes.push_back(new Node(in->geta()->getname()));
+		nodes[nodes.size() - 1]->addchild(new Node(in->getb()->getname()));
+	}
 }
 
 Graph* Graph::reverse()
 {
 	Graph* result = new Graph();
-	for (int i = 0; i < edges.size(); i++)
+	for (int i = 0; i < nodes.size(); i++)
 	{
-		result->addpair(edges[i]->reverse());
+		for (int j = 0; j < nodes.size(); j++)
+		{
+			if (nodes[i]->isparent(nodes[j]))
+			{
+				result->addpair(new NodePair(nodes[j], nodes[i]));
+			}
+		}
 	}
 	return result;
 }

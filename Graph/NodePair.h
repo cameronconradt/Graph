@@ -5,7 +5,9 @@ class NodePair
 public:
 	NodePair(Node* a, Node* b);
 	~NodePair();
-	NodePair* reverse();
+	Node* geta();
+	Node* getb();
+
 protected:
 	Node * a;
 	Node* b

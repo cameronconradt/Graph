@@ -13,8 +13,12 @@ NodePair::~NodePair()
 {
 }
 
-NodePair* NodePair::reverse()
+Node* NodePair::geta()
 {
-	NodePair* result = new NodePair(b, a);
-	return result;
+	return a;
+}
+
+Node* NodePair::getb()
+{
+	return b;
 }
