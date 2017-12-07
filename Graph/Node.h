@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <queue>
 
 using namespace std;
 class Node
@@ -12,7 +13,7 @@ public:
 	void addchild(Node* node);
 	vector<Node*> getchildren();
 	bool isparent(Node* parent);
-	string top_order(vector<Node*> visited);
+	queue<Node*> top_order(vector<Node*> visited);
 	friend bool operator==(const Node lh, const Node rh)
 	{
 		if (lh.name == rh.name)

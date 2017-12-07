@@ -37,9 +37,9 @@ bool Node::isparent(Node* parent)
 	return false;
 }
 
-string Node::top_order(vector<Node*> visited)
+queue<Node*> Node::top_order(vector<Node*> visited)
 {
-	string result = "";
+	queue<Node*> result;
 	visited.push_back(this);
 	for (int i = 0; i < children.size(); i++)
 	{
@@ -51,9 +51,14 @@ string Node::top_order(vector<Node*> visited)
 		}
 		if (!found)
 		{
-			result += children[i]->top_order(visited);
+			queue<Node*> returned = children[i]->top_order();
+			while (returned.size() != 0)
+			{
+				result.push(returned.front());
+				returned.pop();
+			}
 		}
 	}
-	result += name;
+	result.push(this);
 	return result;
 }
