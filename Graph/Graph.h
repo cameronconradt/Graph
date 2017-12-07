@@ -16,7 +16,7 @@ public:
 	~Graph();
 	Graph* reverse();
 	queue<Node*> topological_ordering();
-	queue<vector<Node*>> strong_connect();
+	queue<queue<Node*>> strong_connect();
 	void addpair(NodePair* in);
 protected:
 	vector<Node*> nodes;

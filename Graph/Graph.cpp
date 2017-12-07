@@ -68,9 +68,20 @@ queue<Node*> Graph::topological_ordering()
 			}
 		}
 	}
+	return result;
 }
 
-queue<vector<Node*>> Graph::strong_connect()
+queue<queue<Node*>> Graph::strong_connect()
 {
+	Graph* inverted = this->reverse();
+	queue<Node*> top_order_inverted = inverted->topological_ordering();
+	queue<queue<Node*>> result;
 
+	vector<Node*> visited;
+	while (top_order_inverted.size() != 0)
+	{
+		result.push(top_order_inverted.front()->top_order(visited));
+		top_order_inverted.pop();
+	}
+	return result;
 }
