@@ -11,6 +11,18 @@ Graph::~Graph()
 {
 }
 
+void Graph::addnode(Node* in)
+{
+	bool found = false;
+	for (int i = 0; i < nodes.size() && !found; i++)
+	{
+		if (in == nodes[i])
+			found = true;
+	}
+	if (!found)
+		nodes.push_back(in);
+}
+
 void Graph::addpair(NodePair* in)
 {
 	int found = -1;
